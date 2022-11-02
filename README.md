@@ -1,0 +1,1 @@
+Garden variety angular/electron app to display arrivals and departures of SKG.
