@@ -1,109 +1,228 @@
 <div class="container">
-    <div #departuresArrivalsTable style="display:flex;">
-        <div style="margin:5px">
-            <table class="full-width mat-elevation-z8" mat-table [dataSource]="departures">
-                <ng-container matColumnDef="fnr">
-                    <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header> <b>Flight No.</b> </th>
-                    <td mat-cell class="med" *matCellDef="let element" data-label="fnr"> {{ element.fnr }} </td>
-                    <td mat-footer-cell *matFooterCellDef></td>
-                </ng-container>
+  <div style="display: flex"></div>
+  <div #departuresArrivalsTable style="display: flex">
+    <div style="margin: 5px">
+      <div style="margin: 10px">Departures</div>
+      <table
+        class="full-width mat-elevation-z8"
+        mat-table
+        [dataSource]="departures"
+      >
+        <ng-container matColumnDef="fnr">
+          <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header>
+            <b>Flight No.</b>
+          </th>
+          <td mat-cell class="med" *matCellDef="let element" data-label="fnr">
+            {{ element.fnr }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
 
-                <ng-container matColumnDef="destination">
-                    <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header> <b>Destination</b> </th>
-                    <td mat-cell class="med" *matCellDef="let element" data-label="destination"> {{ element.apname }}
-                    </td>
-                    <td mat-footer-cell *matFooterCellDef></td>
-                </ng-container>
+        <ng-container matColumnDef="destination">
+          <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header>
+            <b>Destination</b>
+          </th>
+          <td
+            mat-cell
+            class="med"
+            *matCellDef="let element"
+            data-label="destination"
+          >
+            {{ element.apname }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
 
-                <ng-container matColumnDef="sched">
-                    <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header> <b>Scheduled</b> </th>
-                    <td mat-cell class="med" *matCellDef="let element" data-label="sched"> {{ element.sched | date: 'hh:mm' }} </td>
-                    <td mat-footer-cell *matFooterCellDef></td>
-                </ng-container>
+        <ng-container matColumnDef="sched">
+          <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header>
+            <b>Scheduled</b>
+          </th>
+          <td mat-cell class="med" *matCellDef="let element" data-label="sched">
+            {{ element.sched | date: "hh:mm" }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
 
-                <ng-container matColumnDef="schalter">
-                    <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header> <b>Checkin</b> </th>
-                    <td mat-cell class="med" *matCellDef="let element" data-label="schalter"> {{ element.schalter }}
-                    </td>
-                    <td mat-footer-cell *matFooterCellDef></td>
-                </ng-container>
+        <ng-container matColumnDef="schalter">
+          <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header>
+            <b>Checkin</b>
+          </th>
+          <td
+            mat-cell
+            class="med"
+            *matCellDef="let element"
+            data-label="schalter"
+          >
+            {{ element.schalter }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
 
-                <ng-container matColumnDef="terminal">
-                    <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header> <b>Terminal</b> </th>
-                    <td mat-cell class="med" *matCellDef="let element" data-label="terminal"> {{ element.terminal }}
-                    </td>
-                    <td mat-footer-cell *matFooterCellDef></td>
-                </ng-container>
+        <ng-container matColumnDef="terminal">
+          <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header>
+            <b>Terminal</b>
+          </th>
+          <td
+            mat-cell
+            class="med"
+            *matCellDef="let element"
+            data-label="terminal"
+          >
+            {{ element.terminal }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
 
-                <ng-container matColumnDef="gate">
-                    <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header> <b>Gate</b> </th>
-                    <td mat-cell class="med" *matCellDef="let element" data-label="gate"> {{ element.gate }} </td>
-                    <td mat-footer-cell *matFooterCellDef></td>
-                </ng-container>
+        <ng-container matColumnDef="gate">
+          <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header>
+            <b>Gate</b>
+          </th>
+          <td mat-cell class="med" *matCellDef="let element" data-label="gate">
+            {{ element.gate }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
 
-                <ng-container matColumnDef="status">
-                    <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header> <b>Comment</b> </th>
-                    <td mat-cell class="med" *matCellDef="let element" data-label="status"> {{ element.status }} </td>
-                    <td mat-footer-cell *matFooterCellDef></td>
-                </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header>
+            <b>Comment</b>
+          </th>
+          <td
+            mat-cell
+            class="med"
+            *matCellDef="let element"
+            data-label="status"
+          >
+            {{ element.status }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
 
-                <tr mat-header-row *matHeaderRowDef="departuresDisplayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: departuresDisplayedColumns;"></tr>
-            </table>
-            <mat-paginator style="display: none" #departuresPaginator [pageSizeOptions]="[19]"></mat-paginator>
-        </div>
-        <div style="margin:5px; margin-right: 20px;">
-            <table class="full-width mat-elevation-z8" mat-table [dataSource]="arrivals">
-                <ng-container matColumnDef="airline">
-                    <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header> <b>Airline</b> </th>
-                    <td mat-cell class="med" *matCellDef="let element" data-label="airline"> {{ element.alname }} </td>
-                    <td mat-footer-cell *matFooterCellDef></td>
-                </ng-container>
-
-                <ng-container matColumnDef="fnr">
-                    <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header> <b>Flight No.</b> </th>
-                    <td mat-cell class="med" *matCellDef="let element" data-label="fnr"> {{ element.fnr }} </td>
-                    <td mat-footer-cell *matFooterCellDef></td>
-                </ng-container>
-
-                <ng-container matColumnDef="codeshare">
-                    <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header> <b>Codeshare</b> </th>
-                    <td mat-cell class="med" *matCellDef="let element" data-label="codeshare"> {{ element.cs !=null ? element.cs.join(', ') : '' }}
-                    </td>
-                    <td mat-footer-cell *matFooterCellDef></td>
-                </ng-container>
-
-                <ng-container matColumnDef="apname">
-                    <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header> <b>Place of departure</b> </th>
-                    <td mat-cell class="med" *matCellDef="let element" data-label="apname"> {{ element.apname }} </td>
-                    <td mat-footer-cell *matFooterCellDef></td>
-                </ng-container>
-
-                <ng-container matColumnDef="sched">
-                    <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header> <b>Scheduled</b> </th>
-                    <td mat-cell class="med" *matCellDef="let element" data-label="sched"> {{ element.sched | date: 'hh:mm'}} </td>
-                    <td mat-footer-cell *matFooterCellDef></td>
-                </ng-container>
-
-                <ng-container matColumnDef="terminal">
-                    <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header> <b>Terminal</b> </th>
-                    <td mat-cell class="med" *matCellDef="let element" data-label="terminal"> {{ element.terminal }}
-                    </td>
-                    <td mat-footer-cell *matFooterCellDef></td>
-                </ng-container>
-
-                <ng-container matColumnDef="status">
-                    <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header> <b>Comment</b> </th>
-                    <td mat-cell class="med" *matCellDef="let element" data-label="status"> {{ element.status }} </td>
-                    <td mat-footer-cell *matFooterCellDef></td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="arrivalsDisplayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: arrivalsDisplayedColumns;"></tr>
-            </table>
-            <mat-paginator style="display: none" #arrivalsPaginator [pageSizeOptions]="[19]"></mat-paginator>
-        </div>
-
+        <tr mat-header-row *matHeaderRowDef="departuresDisplayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: departuresDisplayedColumns"
+        ></tr>
+      </table>
+      <mat-paginator
+        style="display: none"
+        #departuresPaginator
+        [pageSizeOptions]="[PAGE_SIZE]"
+      ></mat-paginator>
     </div>
+    <div style="margin: 5px; margin-right: 20px">
+      <div style="margin: 10px">Arrivals</div>
+      <table
+        class="full-width mat-elevation-z8"
+        mat-table
+        [dataSource]="arrivals"
+      >
+        <ng-container matColumnDef="airline">
+          <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header>
+            <b>Airline</b>
+          </th>
+          <td
+            mat-cell
+            class="med"
+            *matCellDef="let element"
+            data-label="airline"
+          >
+            {{ element.alname }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
 
+        <ng-container matColumnDef="fnr">
+          <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header>
+            <b>Flight No.</b>
+          </th>
+          <td mat-cell class="med" *matCellDef="let element" data-label="fnr">
+            {{ element.fnr }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="codeshare">
+          <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header>
+            <b>Codeshare</b>
+          </th>
+          <td
+            mat-cell
+            class="med"
+            *matCellDef="let element"
+            data-label="codeshare"
+          >
+            {{ element.cs != null ? element.cs.join(", ") : "" }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="apname">
+          <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header>
+            <b>Place of departure</b>
+          </th>
+          <td
+            mat-cell
+            class="med"
+            *matCellDef="let element"
+            data-label="apname"
+          >
+            {{ element.apname }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="sched">
+          <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header>
+            <b>Scheduled</b>
+          </th>
+          <td mat-cell class="med" *matCellDef="let element" data-label="sched">
+            {{ element.sched | date: "hh:mm" }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="terminal">
+          <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header>
+            <b>Terminal</b>
+          </th>
+          <td
+            mat-cell
+            class="med"
+            *matCellDef="let element"
+            data-label="terminal"
+          >
+            {{ element.terminal }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header>
+            <b>Comment</b>
+          </th>
+          <td
+            mat-cell
+            class="med"
+            *matCellDef="let element"
+            data-label="status"
+          >
+            {{ element.status }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="arrivalsDisplayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: arrivalsDisplayedColumns"
+        ></tr>
+      </table>
+      <mat-paginator
+        style="display: none"
+        #arrivalsPaginator
+        [pageSizeOptions]="[PAGE_SIZE]"
+      ></mat-paginator>
+    </div>
+  </div>
 </div>
