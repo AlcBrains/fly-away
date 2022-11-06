@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { mergeMap, Subscription, timer } from 'rxjs';
+import { map, mergeMap, Observable, shareReplay, Subscription, timer } from 'rxjs';
 import { ElectronService } from '../core/services/electron/electron.service';
 
 @Component({
@@ -20,9 +20,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('departuresPaginator') departuresPaginator: MatPaginator;
 
   public PAGE_SIZE = 18;
-  subscription = new Subscription();
-  arrivals: MatTableDataSource<any>;
-  departures: MatTableDataSource<any>;
+  public arrivals: MatTableDataSource<any>;
+  public departures: MatTableDataSource<any>;
+  private _time$: Observable<Date>
+  private subscription = new Subscription();
   public departuresDisplayedColumns: string[] = [
     'fnr',
     'destination',
@@ -81,6 +82,16 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.arrivals.data = tmp;
         })
     );
+
+    this._time$ = timer(0, 1000).pipe(
+      map(tick => new Date()),
+      shareReplay(1)
+    );
+    
+  }
+
+  get time() {
+    return this._time$;
   }
 
   ngAfterViewInit(): void {

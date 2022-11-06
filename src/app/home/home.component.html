@@ -4,7 +4,9 @@
     <div style="margin: 5px">
       <p>
         <mat-toolbar color="primary" class="with-margin">
-          <span>Departures</span>
+          <mat-toolbar-row>
+            <span>Departures</span>
+          </mat-toolbar-row>
         </mat-toolbar>
       </p>
       <table
@@ -42,7 +44,7 @@
             <b>Scheduled</b>
           </th>
           <td mat-cell class="med" *matCellDef="let element" data-label="sched">
-            {{ element.sched | date: "hh:mm" }}
+            {{ element.sched | date: "HH:mm" }}
           </td>
           <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>
@@ -115,11 +117,16 @@
       ></mat-paginator>
     </div>
     <div style="margin: 5px; margin-right: 20px">
-        <p>
-            <mat-toolbar color="primary" class="with-margin">
-              <span>Arrivals</span>
-            </mat-toolbar>
-          </p>
+      <p>
+        <mat-toolbar color="primary" class="with-margin">
+          <mat-toolbar-row>
+            <span>Arrivals</span>
+            <span class="pull-right">{{
+              time | async | date: "HH:mm:ss"
+            }}</span>
+          </mat-toolbar-row>
+        </mat-toolbar>
+      </p>
       <table
         class="full-width with-margin mat-elevation-z8"
         mat-table
@@ -185,7 +192,7 @@
             <b>Scheduled</b>
           </th>
           <td mat-cell class="med" *matCellDef="let element" data-label="sched">
-            {{ element.sched | date: "hh:mm" }}
+            {{ element.sched | date: "HH:mm" }}
           </td>
           <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>
