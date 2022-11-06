@@ -5,7 +5,8 @@
       <p>
         <mat-toolbar color="primary" class="with-margin">
           <mat-toolbar-row>
-            <span>Departures</span>
+            <mat-icon>flight_takeoff</mat-icon>
+            <span class="ml">Departures</span>
           </mat-toolbar-row>
         </mat-toolbar>
       </p>
@@ -14,6 +15,26 @@
         mat-table
         [dataSource]="departures"
       >
+        <ng-container matColumnDef="airline">
+          <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header>
+            <b>Airline</b>
+          </th>
+          <td
+            mat-cell
+            class="med"
+            *matCellDef="let element"
+            data-label="airline"
+          >
+            <img
+              [src]="element.image"
+              [alt]="element.alname"
+              height="30px"
+              width="40px"
+            />
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
         <ng-container matColumnDef="fnr">
           <th mat-header-cell class="med" *matHeaderCellDef mat-sort-header>
             <b>Flight No.</b>
@@ -120,7 +141,8 @@
       <p>
         <mat-toolbar color="primary" class="with-margin">
           <mat-toolbar-row>
-            <span>Arrivals</span>
+            <mat-icon>flight_land</mat-icon>
+            <span class="ml">Arrivals</span>
             <span class="pull-right">{{
               time | async | date: "HH:mm:ss"
             }}</span>
@@ -142,7 +164,12 @@
             *matCellDef="let element"
             data-label="airline"
           >
-            {{ element.alname }}
+            <img
+              [src]="element.image"
+              [alt]="element.alname"
+              height="30px"
+              width="40px"
+            />
           </td>
           <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>

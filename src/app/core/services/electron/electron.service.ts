@@ -38,4 +38,9 @@ export class ElectronService {
     return of(this.ipcRenderer.sendSync('get-departures'))
       .pipe(catchError((error: any) => throwError(() => new Error(error))));
   }
+
+  public getAirlineLogos(): Observable<string> {
+    return of(this.ipcRenderer.sendSync('get-logos'))
+    .pipe(catchError((error: any) => throwError(() => new Error(error))));
+  }
 }

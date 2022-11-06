@@ -3,11 +3,19 @@ import {
   Component,
   OnDestroy,
   OnInit,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { map, mergeMap, Observable, shareReplay, Subscription, timer } from 'rxjs';
+import {
+  map,
+  mergeMap,
+  Observable,
+  shareReplay,
+  Subscription,
+  take,
+  timer
+} from 'rxjs';
 import { ElectronService } from '../core/services/electron/electron.service';
 
 @Component({
@@ -22,9 +30,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   public PAGE_SIZE = 18;
   public arrivals: MatTableDataSource<any>;
   public departures: MatTableDataSource<any>;
-  private _time$: Observable<Date>
+  private airlineLogos: any[];
+  private _time$: Observable<Date>;
   private subscription = new Subscription();
   public departuresDisplayedColumns: string[] = [
+    'airline',
     'fnr',
     'destination',
     'sched',
@@ -49,19 +59,18 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.electronService
+      .getAirlineLogos()
+      .pipe(take(1))
+      .subscribe((res) => {
+        this.airlineLogos = JSON.parse(res);
+      });
+
     this.subscription.add(
       timer(0, 5 * 300000)
         .pipe(mergeMap(() => this.electronService.getDepartures()))
         .subscribe((data) => {
-          const tmp = JSON.parse(data);
-          tmp.forEach((element) => {
-            if (element.status.includes('&nbsp;')) {
-              element.status = '';
-            }
-          });
-          while (tmp.length % this.PAGE_SIZE != 0) {
-            tmp.push({});
-          }
+          const tmp = this.transformFlightInfo(JSON.parse(data));
           this.departures.data = tmp;
         })
     );
@@ -70,24 +79,15 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       timer(0, 5 * 300000)
         .pipe(mergeMap(() => this.electronService.getArrivals()))
         .subscribe((data) => {
-          const tmp = JSON.parse(data);
-          tmp.forEach((element) => {
-            if (element.status.includes('&nbsp;')) {
-              element.status = '';
-            }
-          });
-          while (tmp.length % this.PAGE_SIZE != 0) {
-            tmp.push({});
-          }
+          const tmp = this.transformFlightInfo(JSON.parse(data));
           this.arrivals.data = tmp;
         })
     );
 
     this._time$ = timer(0, 1000).pipe(
-      map(tick => new Date()),
+      map((tick) => new Date()),
       shareReplay(1)
     );
-    
   }
 
   get time() {
@@ -98,7 +98,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.arrivals.paginator = this.arrivalsPaginator;
     this.departures.paginator = this.departuresPaginator;
     [this.arrivalsPaginator, this.departuresPaginator].forEach((paginator) => {
-      setInterval(() => this.changePage(paginator), 30000);
+      setInterval(() => this.changePage(paginator), 15000);
     });
   }
   ngOnDestroy(): void {
@@ -111,5 +111,23 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       paginator.firstPage();
     }
+  }
+
+  private transformFlightInfo(tmp) {
+    tmp.forEach((element) => {
+      if (element.status.includes('&nbsp;')) {
+        element.status = '';
+      }
+      for (let airline of this.airlineLogos) {
+        if (element.alname.toLowerCase().includes(airline.split('.')[0])) {
+          element['image'] = 'assets/icons/airlines/' + airline;
+          break;
+        }
+      }
+    });
+    while (tmp.length % this.PAGE_SIZE != 0) {
+      tmp.push({ image: 'assets/icons/airlines/blank.png' });
+    }
+    return tmp;
   }
 }

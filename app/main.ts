@@ -6,10 +6,9 @@ const axios = require('axios');
 
 let win: BrowserWindow = null;
 const args = process.argv.slice(1),
-  serve = args.some(val => val === '--serve');
+  serve = args.some((val) => val === '--serve');
 
 function createWindow(): BrowserWindow {
-
   const size = screen.getPrimaryDisplay().workAreaSize;
 
   // Create the browser window.
@@ -21,8 +20,8 @@ function createWindow(): BrowserWindow {
     frame: false,
     webPreferences: {
       nodeIntegration: true,
-      allowRunningInsecureContent: (serve),
-      contextIsolation: false,  // false if you want to run e2e test with Spectron
+      allowRunningInsecureContent: serve,
+      contextIsolation: false, // false if you want to run e2e test with Spectron
     },
   });
 
@@ -61,25 +60,42 @@ function getArrivals() {
 }
 
 function getDepartures() {
-  return axios.get('https://www.skg-airport.gr/en/_jcr_content.departures.json');
+  return axios.get(
+    'https://www.skg-airport.gr/en/_jcr_content.departures.json'
+  );
 }
 
+ipcMain.on('get-logos', async (event) => {
+  let pathIndex = 'src/assets/icons/airlines';
+  if (fs.existsSync(path.join(__dirname, '../dist/index.html'))) {
+    // Path when running electron in local folder
+    pathIndex = '../assets/icons/airlines';
+  }
+  fs.readdir(pathIndex, (err, files) => {
+    event.returnValue = JSON.stringify(files);
+  });
+});
+
 ipcMain.on('get-arrivals', async (event) => {
-  getArrivals().then((res) => {
-    event.returnValue = JSON.stringify(res.data.data)
-  }).catch((error)=> {
-    console.log(error)
-    event.returnValue = null
-  })
+  getArrivals()
+    .then((res) => {
+      event.returnValue = JSON.stringify(res.data.data);
+    })
+    .catch((error) => {
+      console.log(error);
+      event.returnValue = null;
+    });
 });
 
 ipcMain.on('get-departures', async (event) => {
-  getDepartures().then((res) => {
-    event.returnValue = JSON.stringify(res.data.data)
-  }).catch((error)=> {
-    console.log(error)
-    event.returnValue = null
-  })
+  getDepartures()
+    .then((res) => {
+      event.returnValue = JSON.stringify(res.data.data);
+    })
+    .catch((error) => {
+      console.log(error);
+      event.returnValue = null;
+    });
 });
 
 try {
@@ -105,7 +121,6 @@ try {
       createWindow();
     }
   });
-
 } catch (e) {
   // Catch Error
   // throw e;
