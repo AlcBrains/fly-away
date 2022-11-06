@@ -56,26 +56,28 @@ function createWindow(): BrowserWindow {
 }
 
 function getArrivals() {
-  return axios.get('https://www.skg-airport.gr/en/_jcr_content.arrivals.json')
-    .then((response) => response.data.data)
-    .catch((error) => console.log(error));
+  return axios.get('https://www.skg-airport.gr/en/_jcr_content.arrivals.json');
 }
 
 function getDepartures() {
-  return axios.get('https://www.skg-airport.gr/en/_jcr_content.departures.json')
-    .then((response) => response.data.data)
-    .catch((error) => console.log(error));
+  return axios.get('https://www.skg-airport.gr/en/_jcr_content.departures.json');
 }
 
 ipcMain.on('get-arrivals', async (event) => {
   getArrivals().then((res) => {
-    event.returnValue = res;
+    event.returnValue = JSON.stringify(res.data.data)
+  }).catch((error)=> {
+    console.log(error)
+    event.returnValue = null
   })
 });
 
 ipcMain.on('get-departures', async (event) => {
   getDepartures().then((res) => {
-    event.returnValue = res;
+    event.returnValue = JSON.stringify(res.data.data)
+  }).catch((error)=> {
+    console.log(error)
+    event.returnValue = null
   })
 });
 

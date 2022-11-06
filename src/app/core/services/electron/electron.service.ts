@@ -29,12 +29,12 @@ export class ElectronService {
     return !!(window && window.process && window.process.type);
   }
 
-  public getArrivals(): Observable<any[]> {
+  public getArrivals(): Observable<string> {
     return of(this.ipcRenderer.sendSync('get-arrivals'))
       .pipe(catchError((error: any) => throwError(() => new Error(error))));
   }
 
-  public getDepartures(): Observable<any[]> {
+  public getDepartures(): Observable<string> {
     return of(this.ipcRenderer.sendSync('get-departures'))
       .pipe(catchError((error: any) => throwError(() => new Error(error))));
   }
