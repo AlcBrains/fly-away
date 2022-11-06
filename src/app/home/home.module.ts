@@ -6,9 +6,18 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { HomeComponent } from './home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [HomeComponent],
-  imports: [CommonModule, HomeRoutingModule, TranslateModule, MatTableModule, MatPaginatorModule, BrowserAnimationsModule]
+  imports: [
+    CommonModule,
+    HomeRoutingModule,
+    TranslateModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatToolbarModule,
+    BrowserAnimationsModule,
+  ],
 })
-export class HomeModule { }
+export class HomeModule {}

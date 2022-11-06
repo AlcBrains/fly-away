@@ -2,9 +2,13 @@
   <div style="display: flex"></div>
   <div #departuresArrivalsTable style="display: flex">
     <div style="margin: 5px">
-      <div style="margin: 10px">Departures</div>
+      <p>
+        <mat-toolbar color="primary" class="with-margin">
+          <span>Departures</span>
+        </mat-toolbar>
+      </p>
       <table
-        class="full-width mat-elevation-z8"
+        class="full-width with-margin mat-elevation-z8"
         mat-table
         [dataSource]="departures"
       >
@@ -111,9 +115,13 @@
       ></mat-paginator>
     </div>
     <div style="margin: 5px; margin-right: 20px">
-      <div style="margin: 10px">Arrivals</div>
+        <p>
+            <mat-toolbar color="primary" class="with-margin">
+              <span>Arrivals</span>
+            </mat-toolbar>
+          </p>
       <table
-        class="full-width mat-elevation-z8"
+        class="full-width with-margin mat-elevation-z8"
         mat-table
         [dataSource]="arrivals"
       >
