@@ -5,6 +5,7 @@ import * as fs from 'fs';
 const axios = require('axios');
 
 let win: BrowserWindow = null;
+let isProd = app.isPackaged
 const args = process.argv.slice(1),
   serve = args.some((val) => val === '--serve');
 
@@ -66,12 +67,19 @@ function getDepartures() {
 }
 
 ipcMain.on('get-logos', async (event) => {
-  let pathIndex = 'src/assets/icons/airlines';
-  if (fs.existsSync(path.join(__dirname, '../dist/index.html'))) {
-    // Path when running electron in local folder
-    pathIndex = '../assets/icons/airlines';
+  let rersourcesPath = path.join(
+    __dirname,
+    '..',
+    'src',
+    'assets',
+    'icons',
+    'airlines'
+  );
+  if (isProd) {
+    rersourcesPath = path.join(__dirname, 'assets', 'icons', 'airlines');
   }
-  fs.readdir(pathIndex, (err, files) => {
+
+  fs.readdir(rersourcesPath, (err, files) => {
     event.returnValue = JSON.stringify(files);
   });
 });

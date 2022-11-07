@@ -3,7 +3,7 @@ import {
   Component,
   OnDestroy,
   OnInit,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,7 +14,7 @@ import {
   shareReplay,
   Subscription,
   take,
-  timer
+  timer,
 } from 'rxjs';
 import { ElectronService } from '../core/services/electron/electron.service';
 
@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('arrivalsPaginator') arrivalsPaginator: MatPaginator;
   @ViewChild('departuresPaginator') departuresPaginator: MatPaginator;
 
-  public PAGE_SIZE = 18;
+  public PAGE_SIZE = 17;
   public arrivals: MatTableDataSource<any>;
   public departures: MatTableDataSource<any>;
   private airlineLogos: any[];
