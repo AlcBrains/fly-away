@@ -8,6 +8,7 @@ import { HomeComponent } from './home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -19,7 +20,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatPaginatorModule,
     MatToolbarModule,
     BrowserAnimationsModule,
-    MatIconModule
+    MatIconModule,
+    MatSnackBarModule
   ],
 })
 export class HomeModule {}

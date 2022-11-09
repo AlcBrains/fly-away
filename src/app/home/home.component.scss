@@ -19,3 +19,23 @@
 .pull-right {
     margin-left: auto;
 }
+
+.mat-row:nth-child(even){
+    background-color: #e8edf8;
+}
+       
+.mat-header-row {
+    background-color: #5064aa;
+}
+
+.mat-header-cell{
+    color: #e8edf8;
+}
+
+.green {
+    background-color:#82af32;
+}
+
+.white-icon {
+    color: white;
+}

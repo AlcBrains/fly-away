@@ -3,10 +3,10 @@
   <div #departuresArrivalsTable style="display: flex">
     <div style="margin: 5px">
       <p>
-        <mat-toolbar color="primary" class="with-margin">
+        <mat-toolbar class="green with-margin">
           <mat-toolbar-row>
-            <mat-icon>flight_takeoff</mat-icon>
-            <span class="ml">Departures</span>
+            <mat-icon  class="white-icon">flight_takeoff</mat-icon>
+            <span class="ml white-icon">Departures</span>
           </mat-toolbar-row>
         </mat-toolbar>
       </p>
@@ -28,6 +28,7 @@
             <img
               [src]="element.image"
               [alt]="element.alname"
+              onerror="this.onerror=null;this.src='assets/icons/airlines/blank.png'"
               height="30px"
               width="40px"
             />
@@ -139,11 +140,11 @@
     </div>
     <div style="margin: 5px; margin-right: 20px">
       <p>
-        <mat-toolbar color="primary" class="with-margin">
+        <mat-toolbar  class="green with-margin">
           <mat-toolbar-row>
-            <mat-icon>flight_land</mat-icon>
-            <span class="ml">Arrivals</span>
-            <span class="pull-right">{{
+            <mat-icon class="white-icon">flight_land</mat-icon>
+            <span class="ml white-icon">Arrivals</span>
+            <span class="pull-right white-icon">{{
               time | async | date: "HH:mm:ss"
             }}</span>
           </mat-toolbar-row>
@@ -167,6 +168,7 @@
             <img
               [src]="element.image"
               [alt]="element.alname"
+              onerror="this.onerror=null;this.src='assets/icons/airlines/blank.png'"
               height="30px"
               width="40px"
             />

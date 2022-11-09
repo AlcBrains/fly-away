@@ -17,6 +17,7 @@ import {
   timer,
 } from 'rxjs';
 import { ElectronService } from '../core/services/electron/electron.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -53,25 +54,37 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     'status',
   ];
 
-  constructor(private electronService: ElectronService) {
+  constructor(
+    private electronService: ElectronService,
+    private _snackBar: MatSnackBar
+  ) {
     this.arrivals = new MatTableDataSource<any>([]);
     this.departures = new MatTableDataSource<any>([]);
   }
 
   ngOnInit(): void {
-    this.electronService
-      .getAirlineLogos()
-      .pipe(take(1))
-      .subscribe((res) => {
-        this.airlineLogos = JSON.parse(res);
-      });
+    this.subscription.add(
+      this.electronService
+        .getAirlineLogos()
+        .pipe(take(1))
+        .subscribe((res) => {
+          if (res == null || res == 'undefined') {
+            this.airlineLogos = [''];
+          }
+          this.airlineLogos = JSON.parse(res);
+        })
+    );
 
     this.subscription.add(
       timer(0, 5 * 300000)
         .pipe(mergeMap(() => this.electronService.getDepartures()))
         .subscribe((data) => {
-          const tmp = this.transformFlightInfo(JSON.parse(data));
-          this.departures.data = tmp;
+          if (data == null) {
+            this._snackBar.open(
+              'Could not establish connection, attempting to reconnect'
+            );
+          }
+          this.departures.data = this.transformFlightInfo(JSON.parse(data));
         })
     );
 
@@ -79,8 +92,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       timer(0, 5 * 300000)
         .pipe(mergeMap(() => this.electronService.getArrivals()))
         .subscribe((data) => {
-          const tmp = this.transformFlightInfo(JSON.parse(data));
-          this.arrivals.data = tmp;
+          if (data == null) {
+            this._snackBar.open(
+              'Could not establish connection, attempting to reconnect'
+            );
+          }
+          this.arrivals.data = this.transformFlightInfo(JSON.parse(data));
         })
     );
 
@@ -97,27 +114,27 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit(): void {
     this.arrivals.paginator = this.arrivalsPaginator;
     this.departures.paginator = this.departuresPaginator;
-    [this.arrivalsPaginator, this.departuresPaginator].forEach((paginator) => {
-      setInterval(() => this.changePage(paginator), 15000);
-    });
+    [this.arrivals.paginator, this.departures.paginator].forEach(
+      (paginator) => {
+        setInterval(() => this.changePage(paginator), 15000);
+      }
+    );
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
   public changePage(paginator) {
-    if (paginator.hasNextPage()) {
-      paginator.nextPage();
-    } else {
-      paginator.firstPage();
-    }
+    paginator.hasNextPage() ? paginator.nextPage() : paginator.firstPage();
   }
 
   private transformFlightInfo(tmp) {
+    // remove html directives
     tmp.forEach((element) => {
       if (element.status.includes('&nbsp;')) {
         element.status = '';
       }
+      // search airline's logo file in airlines list
       for (let airline of this.airlineLogos) {
         if (element.alname.toLowerCase().includes(airline.split('.')[0])) {
           element['image'] = 'assets/icons/airlines/' + airline;
@@ -125,6 +142,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     });
+    // pad array with empty data so as to have fixed length table
     while (tmp.length % this.PAGE_SIZE != 0) {
       tmp.push({ image: 'assets/icons/airlines/blank.png' });
     }
