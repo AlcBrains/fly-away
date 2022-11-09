@@ -90,7 +90,6 @@ ipcMain.on('get-arrivals', async (event) => {
       event.returnValue = JSON.stringify(res.data.data);
     })
     .catch((error) => {
-      console.log(error);
       event.returnValue = null;
     });
 });
@@ -101,7 +100,6 @@ ipcMain.on('get-departures', async (event) => {
       event.returnValue = JSON.stringify(res.data.data);
     })
     .catch((error) => {
-      console.log(error);
       event.returnValue = null;
     });
 });
