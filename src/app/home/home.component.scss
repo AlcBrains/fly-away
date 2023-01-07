@@ -1,41 +1,57 @@
 .full-width {
-    width: 100%;
+  width: 100%;
 }
 
 .with-margin {
-    margin: 10px;
+  margin: 10px;
 }
 
 .ml {
-    margin-left: 5px;
+  margin-left: 5px;
 }
 .med {
-    width: 350px;
-    max-width: 350px;
-    text-overflow: ellipsis;
-    font-weight: bold;
+  width: 350px;
+  max-width: 350px;
+  text-overflow: ellipsis;
+  font-weight: bold;
 }
 
 .pull-right {
-    margin-left: auto;
+  margin-left: auto;
 }
 
-.mat-row:nth-child(even){
-    background-color: #e2e2fd;
+.mat-row:nth-child(even) {
+  background-color: #1b1c20;
 }
-       
+
+.mat-row {
+  background-color: black;
+}
+
 .mat-header-row {
-    background-color: #5064aa;
+  background-color: #1b1c20;
 }
 
-.mat-header-cell{
-    color: #e8edf8;
+.mat-toolbar {
+  font-family: "Ibm Plex Mono";
 }
 
-.green {
-    background-color:#82af32;
+.mat-header-cell {
+  color: #e8edf8;
+  font-family: "Ibm Plex Mono";
+  font-size: inherit;
+}
+
+.black {
+  background-color: black;
 }
 
 .white-icon {
-    color: white;
+  color: white;
+}
+
+.mat-cell {
+  font-family: "Ibm Plex Mono";
+  font-size: inherit;
+  color: #e8edf8;
 }

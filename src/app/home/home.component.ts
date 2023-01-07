@@ -4,6 +4,7 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -23,6 +24,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('arrivalsPaginator') arrivalsPaginator: MatPaginator;
@@ -141,11 +143,26 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
           break;
         }
       }
+      Object.entries(element).forEach(([key, value]) => {
+        if (key != 'image' && key !='sched' && key !='cs') {  
+          element[key] = this.transformFieldInSeriesOfSpans(value)
+        }
+      })
     });
     // pad array with empty data so as to have fixed length table
     while (tmp.length % this.PAGE_SIZE != 0) {
       tmp.push({ image: 'assets/icons/airlines/blank.png' });
     }
     return tmp;
+  }
+
+
+  private transformFieldInSeriesOfSpans(field) {
+    let final = '';
+    for (var i = 0; i < field.length; i++) { 
+      final+='<span>' + field[i] + '</span>'
+    }
+    field = final;
+    return field
   }
 }
